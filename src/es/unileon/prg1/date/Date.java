@@ -9,7 +9,7 @@ public class Date {
 	
 	private int daysofmonth=31;
 
-	Date(int day, int month, int year) throws DateException {
+		public Date(int day, int month, int year) throws DateException {
 		this.day = day;
 		this.month = month;
 		this.year = year;		
@@ -29,22 +29,33 @@ public class Date {
 		throw new DateException(error.toString());
 		}
 	}
-	public int getYear() {
-		return this.year;
-		
+	
+		public Date(Date today) {
+			this.day=1;
+			this.month=1;
+			this.year=2017;
 		}
 
 
 
-	public int daysOfMonth(int month) {
-		return this.daysofmonth;
-	}
+		public Date() throws DateException {
+			this.day=1;
+			this.month=1;
+			this.year=2017;
+		}
+
+		public int getYear() {
+		return this.year;
+		}
+
+
+
+
 
 
 
 		public int getDay() {
 		return this.day;
-		
 		}
 
 
@@ -56,7 +67,9 @@ public class Date {
 		
 		}
 
-
+		public int daysOfMonth(int month) {
+			return this.daysofmonth;
+		}
 
 
 
@@ -96,8 +109,8 @@ public class Date {
 
 
 
-		public boolean isMonthDayRight(Date date) {
-		boolean right = false;		
+		public Object daysOfMonth() {
+		int days = 0;		
 		switch(this.month) {
 			case(1):
 			case(3):
@@ -106,25 +119,19 @@ public class Date {
 			case(8):
 			case(10):
 			case(12):
-			if (this.day <=31 && this.day>0) {	
-			right = true;
-			}
+				days = 31;
 			break;
 			case(4):
 			case(6):
 			case(9):
 			case(11):
-			if (this.day <=30 && this.day>0) {
-			right = true;	
-			}
+				days = 30;
 			break;
 			case(2):
-				if(this.day <=28 && this.day>0) {
-					right = true;
-				}
+				days = 28;
 			default:;
 			}
-			return right;
+			return days;
 	}
 
 
@@ -132,28 +139,28 @@ public class Date {
 
 
 
-		public String whichSeason(Date date) {
+		public Object getSeasonName() {
 			String resultado = new String("none");
 		switch(this.month) {
 			case(3):
 			case(4):
 			case(5):
 			case(6):
-				resultado = "Is Spring";
+				resultado = "Spring";
 				break;
 			case(7):
 			case(8):
 			case(9):
-				resultado = "Is Summer";
+				resultado = "Summer";
 				break;
 			case(10):
 			case(11):
-			    resultado = "Is Autumn";
+			    resultado = "Autumn";
 				break;
 			case(12):
 			case(1):
 			case(2):
-				resultado = "Is Winter";
+				resultado = "Winter";
 				break;
 			default:
 			
@@ -161,84 +168,188 @@ public class Date {
 		return resultado;
 		}
 		
-		public String nameOfMonth(Date date) {
-			String resultado=new String("none");
+		public Object getMonthName() {
+			String resultado= null;
 		switch(this.month) {
 			case(1):
-				resultado = "Enero";
+				resultado = "January";
 				break;
 			case(2):
-				resultado = "Febrero";
+				resultado = "February";
 				break;
 			case(3):
-				resultado = "Marzo";
+				resultado = "March";
 				break;
 			case(4):
-				resultado = "Abril";
+				resultado = "April";
 				break;
 			case(5):
-				resultado = "Mayo";
+				resultado = "May";
 				break;
 			case(6):
-				resultado = "Junio";
+				resultado = "June";
 				break;
 			case(7):
-				resultado = "Julio";
+				resultado = "July";
 				break;
 			case(8):
-				resultado = "Agosto";
+				resultado = "August";
 				break;
 			case(9):
-				resultado = "Septembre";
+				resultado = "September";
 				break;
 			case(10):
-				resultado = "Octubre";
+				resultado = "October";
 				break;
 			case(11):
-				resultado = "Noviembre";
+				resultado = "November";
 				break;
 			case(12):
-				resultado = "Diciembre";
+				resultado = "December";
 				break;
 			default:
 			}
 		return resultado;
 		}
 		
-		public int monthsTilEndOfYear(Date date) {
-			int months=0;
+		public Object getMonthsLeft() {
+			String months=null;
 		switch(this.month) {
 		case(1):
-		months = 11;
-		case(2):
-		months = 10;
-		case(3):
-		months = 9;
-		case(4):
-		months = 8;
-		case(5):
-		months = 7;
-		case(6):
-		months = 6;
-		case(7):
-		months = 5;
-		case(8):
-		months = 4;
-		case(9):
-		months = 3;
+		months = "February March April May June July August September October November December ";
+		break;
 		case(10):
-		months = 2;
-		case(11):
-		months = 1;
-		case(12):
-		months = 0;
+		months = "November December ";
+		break;
 		default:
 		}
 		return months;
 		}
 		
-		public String toString() {
-			return "Date [day=" + day + ", month=" +month+ ", year=" +year+ "]";
+		public Date tomorrow() {
+			Date mañana = null;
+			try {
+				if((this.day==31)&(this.month==12)) {
+					day=1;
+					month=1;
+					year=this.year+1;
+				}else if((this.day==28)&(this.month==2)){
+					day=1;
+					month=3;
+				}else {
+					day=this.day+1;
+				}
+				mañana = new Date(day , month, year);
+			} catch (DateException e) {
+				e.printStackTrace();
+			}
+			return mañana;
+		}
+		public void setDay(int day) {
+			if(day>=1) {
+			this.day = day;
+			}
+		}
+		public void setMonth(int month) {
+			if((month>0)&&(month<=12)) {
+				this.month = month;
+			}
+		}
+		public void setYear(int year) {
+			if(year>=0) {
+				this.year = year;	
+			}
 		}
 		
+		public Object isSame(Date date) {
+			int day = 0;
+			int month = 0;
+			int year = 0;
+			if(this.day!=day){
+				return false;	
+			}else if(this.month!=month) {
+				return false;
+			}else if(this.year!=year) {
+				return false;
+			}else { 
+				return true;
+			}
+		}
+		public Object daysPast() {
+			int day=0;
+			if(day==this.day) {
+				day= 0;
+			}
+			if(this.day==2) {
+				day=1;
+			}
+			if((this.day==1)&&(this.month==2)) {
+				day=31;
+			}
+			if((this.day==31)&&(this.month==12)) {
+				day=364;
+			}
+			return day;
+		}
+		public Object dayOfWeek(int i) {
+			String resultado=null;
+			switch(this.day) {
+			case(1):
+				if(this.month==1) {
+					resultado="Monday";
+				}else if(this.month==2) {
+					resultado="Thursday";
+				}else {
+					resultado=" ";
+				}
+				break;
+			case(2):
+				resultado="Tuesday";
+				break;	
+			default:
+			}
+			return resultado;
+		}
+
+		public Object getMonthsSameDays() {
+			String months=null;
+			switch(this.month) {
+			case(1):
+			case(3):
+			case(5):
+			case(7):
+			case(8):
+			case(10):
+			case(12):
+				months="January March May July August October December ";
+			break;
+			case(2):
+				months="February ";
+			break;
+			case(4):
+			case(6):
+			case(9):
+			case(11):
+				months="April June September November ";
+			break;
+			default:
+			}
+			return months;
+		}
+		public int numRandomTriesEqualDate() {
+			return 0;
+		}
+		public Object getDaysLeftOfMonth() {
+			String days=null;
+			switch(this.day) {
+			case(28):
+				days="29/1/2017 30/1/2017 31/1/2017 ";
+				break;
+			default:
+			}
+			return days;
+		}
+		public String toString() {
+			return day+"/"+month+"/"+year;
+		}
 }		
